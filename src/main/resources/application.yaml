@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: order
+  data:
+    mongodb:
+      uri: mongodb://mongo-rs-db1:27017,mongo-rs-db1:27018,mongo-rs-db1:27019/orderDB?replicaSet=rs0&retryWrites=true
+
+
+server:
+  port: 8082
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka
