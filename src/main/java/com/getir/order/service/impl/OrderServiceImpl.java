@@ -2,6 +2,7 @@ package com.getir.order.service.impl;
 
 import com.getir.order.adapter.OrderAdapter;
 import com.getir.order.adapter.OrderDetailAdapter;
+import com.getir.order.adapter.SoldBookAdapter;
 import com.getir.order.constant.OrderStatus;
 import com.getir.order.dto.BookDTO;
 import com.getir.order.dto.OrderDTO;
@@ -68,12 +69,8 @@ public class OrderServiceImpl implements OrderService {
             //Insert order and order details end
 
             //Update stock information after placing order start
-            List<SoldBookDTO> soldBookDTOList = new ArrayList<>();
-            for (OrderDetailDTO od : orderDTO.getOrderDetailDTOList()) {
-                soldBookDTOList.add(new SoldBookDTO(od.getBookId(), od.getCount()));
-            }
             try {
-                bookClientService.updateStockInfo(soldBookDTOList);
+                bookClientService.updateStockInfo(SoldBookAdapter.mapToSoldBookDTOList(orderDTO));
             } catch (Exception e) {
                 throw new BookListNotUpdatedException();
             }
@@ -119,6 +116,5 @@ public class OrderServiceImpl implements OrderService {
         }
         return orderDTOList;
     }
-
 
 }
